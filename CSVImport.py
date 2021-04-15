@@ -2,10 +2,10 @@ import csv
 import HashTable
 
 csvHashRef = HashTable.ChainingHashTable()
-with open('WGUPSPackageFile.csv') as csvFile:
-    csvReader = csv.reader(csvFile, delimiter=',')
+with open('WGUPSPackageFile.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
     lineCount = 0
-    for row in csvReader:
+    for row in csv_reader:
         objectid = row[0]
         address = row[1]
         city = row[2]
