@@ -1,6 +1,19 @@
 import csv
 import HashTable
 
+class Package:
+    def __init__(self,objectid,address,city,state,zipcode,deadline,weight,status,message):
+        self.objectid = objectid
+        self.address = address
+        self.city = city
+        self.state = state
+        self.zipcode = zipcode
+        self.deadline = deadline
+        self.weight = weight
+        self.status = status
+        self.message = message
+
+
 csvHashRef = HashTable.ChainingHashTable()
 with open('WGUPSPackageFile.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -15,6 +28,6 @@ with open('WGUPSPackageFile.csv') as csv_file:
         weight = row[6]
         status = "At Hub"
         message = row[7]
-        package = (objectid, address, city,state, zipcode, deadline, weight, status, message)
+        package = Package(objectid, address, city,state, zipcode, deadline, weight, status, message)
 
         csvHashRef.insert(package)
