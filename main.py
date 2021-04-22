@@ -1,12 +1,11 @@
 # Zach Hendrix Student ID:001220147
-import CSVImport
-import HashTable
+import DistanceImport
+import PackageImport
 
-csvTable = CSVImport.csvHashRef
-
+package_hash_table = PackageImport.package_hash_ref
+distance_hash_table = DistanceImport.distance_hash_ref
 
 def main_menu():
-    print('')
     print('Welcome to the Daily Local Delivery List for WGU')
     print('Please input a command and press the "Enter" key:')
     print('1. Display Deliveries')
@@ -25,20 +24,21 @@ class Main:
 
         if user_input == '1':
             print("One Selected")
-            for x in csvTable.table:
-                print(csvTable.search(x))
+            print(distance_hash_table.table)
+            for x in package_hash_table.table:
+                print(x)
 
         if user_input == '2':
             print("Two Selected")
             print("Please Enter Package ID")
             package_id = input()
-            print(csvTable.search(package_id))
+            print(package_hash_table.search(package_id))
 
         if user_input == '3':
             print("Two Selected")
             print("Please Enter Package ID")
             package_id = input()
-            csvTable.remove(package_id)
+            package_hash_table.remove(package_id)
 
         if user_input == '4':
             print("Three Selected")

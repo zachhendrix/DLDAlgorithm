@@ -1,16 +1,17 @@
 import csv
 
 
-class ChainingHashTable:
+# HashTable class using chaining.
+class HashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=10):
+    def __init__(self, initial_capacity=50):
         # initialize the hash table with empty bucket list entries.
         self.table = []
         for i in range(initial_capacity):
             self.table.append([])
 
-
+    # Inserts a new item into the hash table.
     def insert(self, key, item):  # does both insert and update
         # get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
@@ -54,3 +55,4 @@ class ChainingHashTable:
             # print (key_value)
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
+
