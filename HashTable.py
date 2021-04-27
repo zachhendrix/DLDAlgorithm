@@ -5,7 +5,7 @@ import csv
 class HashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=50):
+    def __init__(self, initial_capacity=41):
         # initialize the hash table with empty bucket list entries.
         self.table = []
         for i in range(initial_capacity):

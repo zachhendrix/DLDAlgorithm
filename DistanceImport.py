@@ -9,4 +9,4 @@ with open('WGUPSDistanceTable.csv') as csv_file:
     for row in csv_reader:
         package = [row[0], row[1], row[2], row[3], row[4], row[5], row[6], 'At Hub', row[7]]
 
-        distance_hash_ref.insert()
+        distance_hash_ref.insert(row[0],package)

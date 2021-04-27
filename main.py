@@ -25,23 +25,25 @@ class Main:
         if user_input == '1':
             print("One Selected")
             print(distance_hash_table.table)
-            for x in package_hash_table.table:
-                print(x)
+            for x in range(1, len(package_hash_table.table)):
+                print(package_hash_table.search(str(x)))
 
         if user_input == '2':
             print("Two Selected")
-            print("Please Enter Package ID")
+            print("Please Enter Package ID to Search")
             package_id = input()
             print(package_hash_table.search(package_id))
 
         if user_input == '3':
             print("Two Selected")
-            print("Please Enter Package ID")
+            print("Please Enter Package ID to Delete")
             package_id = input()
             package_hash_table.remove(package_id)
 
         if user_input == '4':
             print("Three Selected")
+            for x in range(1, len(package_hash_table.table)):
+                print(package_hash_table.search(str(x)))
 
         if user_input == '5':
             print("Four Selected")
