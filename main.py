@@ -5,6 +5,7 @@ import PackageImport
 package_hash_table = PackageImport.package_hash_ref
 distance_hash_table = DistanceImport.distance_hash_ref
 
+
 def main_menu():
     print('Welcome to the Daily Local Delivery List for WGU')
     print('Please input a command and press the "Enter" key:')
