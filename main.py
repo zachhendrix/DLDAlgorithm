@@ -3,7 +3,7 @@ import DistanceImport
 import PackageImport
 
 package_hash_table = PackageImport.package_hash_ref
-distance_hash_table = DistanceImport.distance_hash_ref
+distance_table = DistanceImport.distance_table
 
 
 def main_menu():
@@ -25,7 +25,7 @@ class Main:
 
         if user_input == '1':
             print("One Selected")
-            print(distance_hash_table.table)
+            print(('{}\n'*len(distance_table)).format(*distance_table))
             for x in range(1, len(package_hash_table.table)):
                 print(package_hash_table.search(str(x)))
 
