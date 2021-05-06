@@ -1,19 +1,17 @@
 # Zach Hendrix Student ID:001220147
-import DistanceImport
-import PackageImport
-
-package_hash_table = PackageImport.package_hash_ref
-distance_table = DistanceImport.distance_table
+from DistanceImport import distance_table
+from PackageImport import package_hash
 
 
 def main_menu():
     print('Welcome to the Daily Local Delivery List for WGU')
     print('Please input a command and press the "Enter" key:')
-    print('1. Display Deliveries')
-    print('2. Lookup Specific Deliveries')
-    print('3. Remove Specific Deliveries')
-    print('4. Lookup Delivery Status')
-    print('5. Lookup Truck Status')
+    print('1. Run Simulation')
+    print('2. Display Deliveries')
+    print('3. Lookup Specific Deliveries')
+    print('4. Remove Specific Deliveries')
+    print('5. Lookup Delivery Status')
+    print('6. Lookup Truck Status')
     print('To exit the program please input "exit"')
     print('To see this menu again please input "menu"')
 
@@ -25,29 +23,34 @@ class Main:
 
         if user_input == '1':
             print("One Selected")
-            print(('{}\n'*len(distance_table)).format(*distance_table))
-            for x in range(1, len(package_hash_table.table)):
-                print(package_hash_table.search(str(x)))
 
         if user_input == '2':
             print("Two Selected")
-            print("Please Enter Package ID to Search")
-            package_id = input()
-            print(package_hash_table.search(package_id))
+
+            for x in range(1, len(distance_table)):
+                print(distance_table[x])
+            for x in range(1, len(package_hash.table)):
+                print(package_hash.search(str(x)))
 
         if user_input == '3':
-            print("Two Selected")
-            print("Please Enter Package ID to Delete")
+            print("Three Selected")
+            print("Please Enter Package ID to Search")
             package_id = input()
-            package_hash_table.remove(package_id)
+            print(package_hash.search(package_id))
 
         if user_input == '4':
-            print("Three Selected")
-            for x in range(1, len(package_hash_table.table)):
-                print(package_hash_table.search(str(x)))
+            print("Four Selected")
+            print("Please Enter Package ID to Delete")
+            package_id = input()
+            package_hash.remove(package_id)
 
         if user_input == '5':
-            print("Four Selected")
+            print("Five Selected")
+            for x in range(1, len(package_hash.table)):
+                print(package_hash.search(str(x)))
+
+        if user_input == '6':
+            print("Six Selected")
 
         elif user_input == 'menu':
             main_menu()
