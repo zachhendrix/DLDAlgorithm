@@ -1,7 +1,6 @@
 import csv
 import HashTable
 
-
 package_hash = HashTable.HashTable()
 
 with open('WGUPSPackageFile.csv') as csv_file:

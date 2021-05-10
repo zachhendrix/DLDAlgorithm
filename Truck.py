@@ -1,11 +1,13 @@
 class Truck:
     mileage = 0
     miles_per_min = .3
-    cargo = {}
+    location = "At Hub"
+    cargo = []
 
-    def __init__(self, mlg, mpm, carg):
+    def __init__(self, mlg, mpm, loc, carg):
         self.mileage = mlg
         self.miles_per_min = mpm
+        self.location = loc
         self.cargo = carg
 
     def display(self):

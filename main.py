@@ -1,6 +1,12 @@
 # Zach Hendrix Student ID:001220147
 from DistanceImport import distance_table
 from PackageImport import package_hash
+import Truck
+
+truck_Alpha = Truck.Truck(0, .3, "At Hub", [])
+truck_Beta = Truck.Truck(0, .3, "At Hub", [])
+delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
+delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
 
 
 def main_menu():
@@ -16,6 +22,14 @@ def main_menu():
     print('To see this menu again please input "menu"')
 
 
+def load_trucks():
+    # Truck loading process
+    for i in delivery_list_alpha:
+        truck_Alpha.cargo.append(i)
+    for i in delivery_list_beta:
+        truck_Beta.cargo.append(i)
+
+
 class Main:
     main_menu()
     user_input = input()
@@ -23,6 +37,9 @@ class Main:
 
         if user_input == '1':
             print("One Selected")
+            load_trucks()
+            print("Truck Alpha Package IDs:", truck_Alpha.cargo)
+            print("Truck Beta Package IDs:", truck_Beta.cargo)
 
         if user_input == '2':
             print("Two Selected")
@@ -51,6 +68,9 @@ class Main:
 
         if user_input == '6':
             print("Six Selected")
+            print(truck_Alpha.location)
+            print(truck_Beta.location)
+
 
         elif user_input == 'menu':
             main_menu()
