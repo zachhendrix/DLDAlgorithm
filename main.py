@@ -7,6 +7,7 @@ truck_Alpha = Truck.Truck(0, .3, "At Hub", [])
 truck_Beta = Truck.Truck(0, .3, "At Hub", [])
 delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
 delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
+delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35]
 
 
 def main_menu():
@@ -30,6 +31,16 @@ def load_trucks():
         truck_Beta.cargo.append(i)
 
 
+def greedy_Delivery(truck):
+    while truck.mileage < 180:
+        for i in truck.cargo:
+            package_select = package_hash.search(i)
+
+
+
+
+
+
 class Main:
     main_menu()
     user_input = input()
@@ -40,6 +51,9 @@ class Main:
             load_trucks()
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
+            print(distance_table[1][0])
+
+
 
         if user_input == '2':
             print("Two Selected")
@@ -68,14 +82,13 @@ class Main:
 
         if user_input == '6':
             print("Six Selected")
-            print(truck_Alpha.location)
-            print(truck_Beta.location)
+            print("Truck Alpha Location:", truck_Alpha.location)
+            print("Truck Beta Location:", truck_Beta.location)
 
-
-        elif user_input == 'menu':
+        if user_input == 'menu':
             main_menu()
 
-        elif user_input == 'exit':
+        if user_input == 'exit':
             exit()
 
         else:
