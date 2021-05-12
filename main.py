@@ -1,4 +1,5 @@
 # Zach Hendrix Student ID:001220147
+import datetime
 from DistanceImport import distance_table
 from PackageImport import package_hash
 import Truck
@@ -31,13 +32,11 @@ def load_trucks():
         truck_Beta.cargo.append(i)
 
 
-def greedy_Delivery(truck):
-    while truck.mileage < 180:
-        for i in truck.cargo:
-            package_select = package_hash.search(i)
-
-
-
+def greedy_delivery(truck):
+    shortest_distance = 0
+    for x in range(1, len(truck.cargo)):
+        package_select = package_hash.search(str(x))
+        print(package_select)
 
 
 
@@ -49,10 +48,10 @@ class Main:
         if user_input == '1':
             print("One Selected")
             load_trucks()
+            greedy_delivery(truck_Alpha)
+            greedy_delivery(truck_Beta)
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
-            print(distance_table[1][0])
-
 
 
         if user_input == '2':
