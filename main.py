@@ -1,11 +1,12 @@
 # Zach Hendrix Student ID:001220147
 import datetime
-from DistanceImport import distance_table
-from PackageImport import package_hash
-import Truck
+from ImportDistance import distance_table
+from ImportPackage import package_hash
+from ImportAddress import address_table
+from Truck import Truck
 
-truck_Alpha = Truck.Truck(0, .3, "At Hub", [])
-truck_Beta = Truck.Truck(0, .3, "At Hub", [])
+truck_Alpha = Truck(0, .3, '4001 South 700 East', [])
+truck_Beta = Truck(0, .3, '4001 South 700 East', [])
 delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
 delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
 delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35]
@@ -32,12 +33,22 @@ def load_trucks():
         truck_Beta.cargo.append(i)
 
 
+def distance_between(current, new):
+    current_index = address_table.index(current)
+    new_index = address_table.index(new)
+    distance = distance_table[current_index][new_index]
+    return distance
+
+
+##FIND THE STUPID REASON ITS NOT FINDING THE INDEX IN THE "distance_between" method
 def greedy_delivery(truck):
     shortest_distance = 0
-    for x in range(1, len(truck.cargo)):
-        package_select = package_hash.search(str(x))
-        print(package_select)
+    for x in range(0, len(truck.cargo)):
+        package_select = package_hash.search(str(truck.cargo[x]))
+        package_destination = package_select[1]
 
+        print(truck.location)
+        print(package_select, package_destination)
 
 
 class Main:
@@ -53,12 +64,13 @@ class Main:
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
 
-
         if user_input == '2':
             print("Two Selected")
 
-            for x in range(1, len(distance_table)):
+            for x in range(0, len(distance_table)):
                 print(distance_table[x])
+            for x in range(0, len(address_table)):
+                print(address_table[x])
             for x in range(1, len(package_hash.table)):
                 print(package_hash.search(str(x)))
 
