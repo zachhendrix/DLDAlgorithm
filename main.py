@@ -40,15 +40,28 @@ def distance_between(current, new):
     return distance
 
 
-##FIND THE STUPID REASON ITS NOT FINDING THE INDEX IN THE "distance_between" method
 def greedy_delivery(truck):
-    shortest_distance = 0
-    for x in range(0, len(truck.cargo)):
-        package_select = package_hash.search(str(truck.cargo[x]))
-        package_destination = package_select[1]
+    delivery_end = False
+    while not delivery_end:
+        shortest_distance = 100
+        shortest_location = ''
+        shortest_id = ''
+        for x in range(0, len(truck.cargo)):
+            package_select = package_hash.search(str(truck.cargo[x]))
+            package_destination = package_select[1]
+            package_id = package_select[0]
+            distance_ref = distance_between(truck.location, package_destination)
+            if float(shortest_distance) >= float(distance_ref):
+                shortest_distance = str(distance_ref)
+                shortest_location = package_destination
+                shortest_id = package_id
 
-        print(truck.location)
-        print(package_select, package_destination)
+        truck.location = shortest_location
+        truck.mileage = truck.mileage + float(shortest_distance)
+        truck.cargo.remove(shortest_id)
+        delivery_end = True
+
+
 
 
 class Main:
@@ -67,10 +80,11 @@ class Main:
         if user_input == '2':
             print("Two Selected")
 
-            for x in range(0, len(distance_table)):
-                print(distance_table[x])
-            for x in range(0, len(address_table)):
-                print(address_table[x])
+            ##for x in range(0, len(distance_table)):
+               # print(distance_table[x])
+            #for x in range(0, len(address_table)):
+                #print(address_table[x])
+
             for x in range(1, len(package_hash.table)):
                 print(package_hash.search(str(x)))
 
