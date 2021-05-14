@@ -5,8 +5,8 @@ from ImportPackage import package_hash
 from ImportAddress import address_table
 from Truck import Truck
 
-truck_Alpha = Truck(0, .3, '4001 South 700 East', [])
-truck_Beta = Truck(0, .3, '4001 South 700 East', [])
+truck_Alpha = Truck(0, .3, '4001 South 700 East', [], [])
+truck_Beta = Truck(0, .3, '4001 South 700 East', [], [])
 delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
 delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
 delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35]
@@ -29,8 +29,10 @@ def load_trucks():
     # Truck loading process
     for i in delivery_list_alpha:
         truck_Alpha.cargo.append(i)
+    truck_Alpha.cargo_list = truck_Alpha.cargo
     for i in delivery_list_beta:
         truck_Beta.cargo.append(i)
+    truck_Beta.cargo_list = truck_Alpha.cargo
 
 
 def distance_between(current, new):
@@ -46,22 +48,20 @@ def greedy_delivery(truck):
         shortest_distance = 100
         shortest_location = ''
         shortest_id = ''
-        for x in range(0, len(truck.cargo)):
-            package_select = package_hash.search(str(truck.cargo[x]))
+        for x in range(0, len(truck.get_cargo())):
+            package_select = package_hash.search(str(truck.cargo_list[x]))
             package_destination = package_select[1]
             package_id = package_select[0]
-            distance_ref = distance_between(truck.location, package_destination)
+            distance_ref = distance_between(truck.get_location(), package_destination)
             if float(shortest_distance) >= float(distance_ref):
                 shortest_distance = str(distance_ref)
                 shortest_location = package_destination
                 shortest_id = package_id
 
-        truck.location = shortest_location
-        truck.mileage = truck.mileage + float(shortest_distance)
-        truck.cargo.remove(shortest_id)
+        truck.set_location(shortest_location)
+        truck.add_mileage(float(shortest_distance))
+        truck.remove_cargo(shortest_id)
         delivery_end = True
-
-
 
 
 class Main:
@@ -79,11 +79,6 @@ class Main:
 
         if user_input == '2':
             print("Two Selected")
-
-            ##for x in range(0, len(distance_table)):
-               # print(distance_table[x])
-            #for x in range(0, len(address_table)):
-                #print(address_table[x])
 
             for x in range(1, len(package_hash.table)):
                 print(package_hash.search(str(x)))
