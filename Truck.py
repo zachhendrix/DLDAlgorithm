@@ -5,12 +5,11 @@ class Truck:
     cargo = []
     cargo_list = cargo
 
-    def __init__(self, _mileage, _miles_per_min, _location, _cargo, _cargo_list):
+    def __init__(self, _mileage, _miles_per_min, _location, _cargo):
         self.mileage = _mileage
         self.miles_per_min = _miles_per_min
         self.location = _location
         self.cargo = _cargo
-        self.cargo_list = _cargo_list
 
     def get_mileage(self):
         return self.mileage
