@@ -7,6 +7,7 @@ from Truck import Truck
 
 truck_Alpha = Truck(0, .3, '4001 South 700 East', [])
 truck_Beta = Truck(0, .3, '4001 South 700 East', [])
+truck_Gamma = Truck(0, .3, '4001 South 700 East', [])
 delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
 delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
 delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35]
@@ -33,6 +34,8 @@ def load_trucks():
     for i in delivery_list_beta:
         truck_Beta.cargo.append(i)
 
+    for i in delivery_list_gamma:
+        truck_Gamma.cargo.append(i)
 
 
 def distance_between(current, new):
@@ -44,25 +47,31 @@ def distance_between(current, new):
 
 def greedy_delivery(truck):
     delivery_end = False
+    final_packages_loaded = False
     while not delivery_end:
         shortest_distance = 100
         shortest_location = ''
         shortest_id = ''
-        for x in range(0, len(truck.get_cargo())):
-            package_select = package_hash.search(str(truck.cargo[x]))
-            package_destination = package_select[1]
-            package_id = package_select[0]
-            distance_ref = distance_between(truck.get_location(), package_destination)
-            if float(shortest_distance) >= float(distance_ref):
-                shortest_distance = str(distance_ref)
-                shortest_location = package_destination
-                shortest_id = package_id
+        if truck.cargo:
+            for x in range(0, len(truck.get_cargo())):
+                package_select = package_hash.search(str(truck.cargo[x]))
+                package_destination = package_select[1]
+                package_id = package_select[0]
+                distance_ref = distance_between(truck.get_location(), package_destination)
+                if float(shortest_distance) >= float(distance_ref):
+                    shortest_distance = str(distance_ref)
+                    shortest_location = package_destination
+                    shortest_id = package_id
 
         truck.set_location(shortest_location)
         truck.add_mileage(float(shortest_distance))
         truck.remove_cargo(int(shortest_id))
-        print("Package:", shortest_id,"delivered")
-        delivery_end = True
+        print("Package:", shortest_id, "delivered")
+
+        if not truck.cargo:
+            truck.set_location('4001 South 700 East')
+            truck.add_mileage(float(distance_between(truck.location, '4001 South 700 East')))
+            delivery_end = True
 
 
 class Main:
@@ -75,8 +84,15 @@ class Main:
             load_trucks()
             greedy_delivery(truck_Alpha)
             greedy_delivery(truck_Beta)
+
+            ##Poor truck driver has to go back out, hire more drivers WGU!
+            if not truck_Alpha.cargo and not truck_Beta.cargo:
+                greedy_delivery(truck_Gamma)
+
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
+            print("Truck Gamma Package IDs:", truck_Gamma.cargo)
+            print("Total truck mileage", float(truck_Alpha.mileage) + float(truck_Beta.mileage) + float(truck_Gamma.mileage))
 
         if user_input == '2':
             print("Two Selected")
