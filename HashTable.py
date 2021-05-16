@@ -1,4 +1,4 @@
-# HashTable class using chaining.
+# HashTable class using chaining which includes an insert, search and remove method.
 class HashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.

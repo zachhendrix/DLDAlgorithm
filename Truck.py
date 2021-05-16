@@ -1,3 +1,6 @@
+# Truck object class which contains getters and setters as well as an 'add_mileage' method which adds mileage traveled
+# and a 'remove_cargo' method which removes the package ID specified.
+
 class Truck:
     mileage = 0
     miles_per_min = .3
