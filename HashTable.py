@@ -1,6 +1,3 @@
-import csv
-
-
 # HashTable class using chaining.
 class HashTable:
     # Constructor with optional initial capacity parameter.

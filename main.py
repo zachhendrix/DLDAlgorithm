@@ -1,5 +1,5 @@
-# Zach Hendrix Student ID:001220147
-import datetime
+# Requirement C.1: Zach Hendrix Student ID:001220147
+
 from ImportDistance import distance_table
 from ImportPackage import package_hash
 from ImportAddress import address_table
@@ -10,7 +10,7 @@ truck_Beta = Truck(0, .3, '4001 South 700 East', [])
 truck_Gamma = Truck(0, .3, '4001 South 700 East', [])
 delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
 delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
-delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35]
+delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35, 39]
 
 
 def main_menu():
@@ -45,6 +45,8 @@ def distance_between(current, new):
     return distance
 
 
+# Requirement A: Greedy Algorithm
+#
 def greedy_delivery(truck):
     delivery_end = False
     final_packages_loaded = False
@@ -92,7 +94,8 @@ class Main:
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
             print("Truck Gamma Package IDs:", truck_Gamma.cargo)
-            print("Total truck mileage", float(truck_Alpha.mileage) + float(truck_Beta.mileage) + float(truck_Gamma.mileage))
+            print("Total truck mileage",
+                  float(truck_Alpha.mileage) + float(truck_Beta.mileage) + float(truck_Gamma.mileage))
 
         if user_input == '2':
             print("Two Selected")

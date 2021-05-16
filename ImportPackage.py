@@ -1,3 +1,5 @@
+# Imports data from the 'WGUPSPackageFile' csv file and hashes it in the 'package_hash' hash table
+# The 'package' list is created from data in the rows and the list is inserted into the 'package_hash'
 import csv
 import HashTable
 

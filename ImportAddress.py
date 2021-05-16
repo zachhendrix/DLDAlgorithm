@@ -1,3 +1,5 @@
+# Imports data from the 'WGUPSAddressTable' csv file and caches it in the 'address_table' list.
+# The addresses are used as an index to determine distance with the help of the WGUPSDistanceTable.
 import csv
 
 address_table = []
