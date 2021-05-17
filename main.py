@@ -1,16 +1,21 @@
 # Requirement C.1: Zach Hendrix Student ID:001220147
+import math
 from ImportDistance import distance_table
 from ImportPackage import package_hash
 from ImportAddress import address_table
 from Truck import Truck
+from Clock import Clock
 
 # The truck objects are created and the lists are manually specified to fit rules and specifications
 truck_Alpha = Truck(0, .3, '4001 South 700 East', [])
 truck_Beta = Truck(0, .3, '4001 South 700 East', [])
 truck_Gamma = Truck(0, .3, '4001 South 700 East', [])
-delivery_list_alpha = [1, 2, 4, 5, 6, 7, 8, 25, 28, 29, 30, 31, 32, 34, 37, 40]
-delivery_list_beta = [3, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 36, 38]
-delivery_list_gamma = [9, 23, 24, 26, 27, 33, 35, 39]
+clock_Alpha = Clock(9, 5, True)
+clock_Beta = Clock(8, 0, True)
+clock_Gamma = Clock(8, 0, True)
+delivery_list_alpha = [6, 25, 28, 29, 30, 31, 32, 40]
+delivery_list_beta = [1, 3, 13, 14, 15, 16, 18, 19, 20, 21, 33, 34, 36, 37, 38, 39]
+delivery_list_gamma = [2, 4, 5, 7, 8, 9, 10, 11, 12, 17, 22, 23, 24, 26, 27, 35]
 
 
 # Function that displays the Main Menu and the options listed
@@ -52,7 +57,7 @@ def distance_between(current, new):
 
 # Requirement A: Greedy Algorithm
 # Function that uses a greedy algorithm to determine the quickest route to deliver the packages loaded.
-def greedy_delivery(truck):
+def greedy_delivery(truck, clock):
     delivery_end = False
     while not delivery_end:
         shortest_distance = 100
@@ -77,11 +82,12 @@ def greedy_delivery(truck):
         truck.set_location(shortest_location)
         truck.add_mileage(float(shortest_distance))
         truck.remove_cargo(int(shortest_id))
-        print("Package:", shortest_id, "delivered")
+        clock.add_minute(float(shortest_distance / truck.miles_per_min))
+        print("Package:", shortest_id, "delivered at:", clock.get_time())
 
         # The truck continues the process until the cargo is empty in which it returns to the depot
         if not truck.cargo:
-            truck.add_mileage(float(distance_between(truck.location, '4001 South 700 East')))
+            truck.add_mileage(math.ceil(float(distance_between(truck.location, '4001 South 700 East'))))
             truck.set_location('4001 South 700 East')
             delivery_end = True
 
@@ -94,17 +100,21 @@ class Main:
         if user_input == '1':
             print("One Selected")
             load_trucks()
-            greedy_delivery(truck_Alpha)
-            greedy_delivery(truck_Beta)
+            greedy_delivery(truck_Alpha, clock_Alpha)
+            greedy_delivery(truck_Beta, clock_Beta)
 
             ##Poor truck driver has to go back out, hire more drivers WGU!
             if not truck_Alpha.cargo or not truck_Beta.cargo:
-                greedy_delivery(truck_Gamma)
+                clock_Gamma = clock_Alpha
+                greedy_delivery(truck_Gamma, clock_Gamma)
 
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
             print("Truck Gamma Package IDs:", truck_Gamma.cargo)
-            print("Total truck mileage", float(truck_Alpha.mileage) + float(truck_Beta.mileage) + float(truck_Gamma.mileage))
+            print("Total truck mileage",
+                  float(truck_Alpha.mileage) +
+                  float(truck_Beta.mileage) +
+                  float(truck_Gamma.mileage))
 
         if user_input == '2':
             print("Two Selected")
