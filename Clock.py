@@ -29,11 +29,11 @@ class Clock:
         while self.minutes >= 60:
             minutes_ref = self.minutes
             self.minutes = minutes_ref - 60
-            self.hours = self.hours + 1
+            self.add_hour(1)
 
     def add_hour(self, x):
-        self.hours = self.hour + x
+        self.hours = self.hours + x
         if self.hours > 11:
-            self.is_morning = not self.is_morning
+            self.is_morning = False
         if self.hours > 12:
             self.hours = 1
