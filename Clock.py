@@ -1,5 +1,6 @@
-# Truck object class which contains getters and setters as well as an 'add_mileage' method which adds mileage traveled
-# and a 'remove_cargo' method which removes the package ID specified.
+# Clock object class which contains getters and setters as well as an add_minute and add_hour which are used to
+# calculate the simulated time. I also used the "math.ciel()" to make sure that my delivery times weren't
+# reduced artificially; Instead my delivery times are artificially higher and still delivered on time.
 import math
 
 

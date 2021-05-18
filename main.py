@@ -35,14 +35,24 @@ def main_menu():
 # Functions that loads the trucks using the delivery lists, no specifications on time, assume that Truck Gamma is not
 # loaded until the packages are fixed and arrive at the depot.
 def load_trucks():
-    # Truck loading process
+    # Truck loading process, included is some code that changes the delivery status of the packages to "On Truck"
+    # while the user will never really see that in this iteration of the program, I included it for scalability.
     for i in delivery_list_alpha:
+        package_ref = package_hash.search(str(i))
+        package_ref[7] = "On Truck"
+        package_hash.insert(package_ref[0],package_ref)
         truck_Alpha.cargo.append(i)
 
     for i in delivery_list_beta:
+        package_ref = package_hash.search(str(i))
+        package_ref[7] = "On Truck"
+        package_hash.insert(package_ref[0], package_ref)
         truck_Beta.cargo.append(i)
 
     for i in delivery_list_gamma:
+        package_ref = package_hash.search(str(i))
+        package_ref[7] = "On Truck"
+        package_hash.insert(package_ref[0], package_ref)
         truck_Gamma.cargo.append(i)
 
 
@@ -60,6 +70,7 @@ def distance_between(current, new):
 def greedy_delivery(truck, clock):
     delivery_end = False
     while not delivery_end:
+        # I suppose the shortest_distance could cause errors if over 100, but at that point use UPS or something
         shortest_distance = 100
         shortest_location = ''
         shortest_id = ''
@@ -72,16 +83,21 @@ def greedy_delivery(truck, clock):
                 package_id = package_select[0]
                 distance_ref = float(distance_between(truck.get_location(), package_destination))
 
-                # Determines if the package is the closest and holds the shortest distance and associated useful data
+                # Determines if the package is the closest and holds the associated useful data for the shortest
                 if float(shortest_distance) >= float(distance_ref):
                     shortest_distance = distance_ref
                     shortest_location = package_destination
                     shortest_id = package_id
+                    shortest_package = package_select
 
         # The truck moves to the location, the mileage is added to the truck and the cargo is delivered
+        # The "package_hash" is also replaced with the same package data except the delivery status has changed
+        # Minutes are then added to clock using "time = distance / velocity" formula.
         truck.set_location(shortest_location)
         truck.add_mileage(float(shortest_distance))
         truck.remove_cargo(int(shortest_id))
+        shortest_package[7] = "Delivered"
+        package_hash.insert(shortest_id, shortest_package)
         clock.add_minute(float(shortest_distance / truck.miles_per_min))
         print("Package:", shortest_id, "delivered at:", clock.get_time())
 
@@ -95,15 +111,19 @@ def greedy_delivery(truck, clock):
 class Main:
     main_menu()
     user_input = input()
+    # Process runs until exit is entered in the command line
     while user_input != 'exit':
-
+        
+        # The first selection runs the simulation the trucks are loaded using the "load_trucks" function and then the
+        # created trucks and their associated clocks are passed into the "greedy_delivery" function. For user visuals
+        # the printing of the trucks empty cargo is included as well as the sum of the total truck mileage.
         if user_input == '1':
             print("One Selected")
             load_trucks()
             greedy_delivery(truck_Alpha, clock_Alpha)
             greedy_delivery(truck_Beta, clock_Beta)
 
-            ##Poor truck driver has to go back out, hire more drivers WGU!
+            # Poor truck driver has to go back out, hire more drivers WGU!
             if not truck_Alpha.cargo or not truck_Beta.cargo:
                 clock_Gamma = clock_Alpha
                 greedy_delivery(truck_Gamma, clock_Gamma)
@@ -116,29 +136,36 @@ class Main:
                   float(truck_Beta.mileage) +
                   float(truck_Gamma.mileage))
 
+        # Function that displays all deliveries, useful for seeing the difference in before the "greedy_algorithm" was
+        # run and after.
         if user_input == '2':
             print("Two Selected")
 
             for x in range(1, len(package_hash.table)):
                 print(package_hash.search(str(x)))
 
+        # Package search by entering number
         if user_input == '3':
             print("Three Selected")
             print("Please Enter Package ID to Search")
             package_id = input()
             print(package_hash.search(package_id))
 
+        # Package deletion by entering number
         if user_input == '4':
             print("Four Selected")
             print("Please Enter Package ID to Delete")
             package_id = input()
             package_hash.remove(package_id)
 
+        # Essentially the same as two, would be more useful if the simulation was in real time.
         if user_input == '5':
             print("Five Selected")
             for x in range(1, len(package_hash.table)):
-                print(package_hash.search(str(x)))
+                package_str = package_hash.search(str(x))
+                print(package_str[0],": ", package_str[7])
 
+        # Would be more useful if was run in real time, however you can see the difference before and after deliveries
         if user_input == '6':
             print("Six Selected")
             print("Truck Alpha Location:", truck_Alpha.get_location())
@@ -148,9 +175,11 @@ class Main:
             print("Truck Gamma Location:", truck_Gamma.get_location())
             print("Truck Gamma Mileage:", truck_Gamma.get_mileage())
 
+        # Displays menu again
         if user_input == 'menu':
             main_menu()
 
+        # Exits program
         if user_input == 'exit':
             exit()
 
