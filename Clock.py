@@ -25,13 +25,18 @@ class Clock:
         self.minutes = y
         self.is_morning = z
 
+    def get_minutes(self):
+        return self.minutes
 
-    def add_minute(self, x):
+    def add_minutes(self, x):
         self.minutes = self.minutes + math.ceil(x)
         while self.minutes >= 60:
             minutes_ref = self.minutes
             self.minutes = minutes_ref - 60
             self.add_hour(1)
+
+    def get_hours(self):
+        return self.hours
 
     def add_hour(self, x):
         self.hours = self.hours + x

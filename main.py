@@ -32,6 +32,85 @@ def main_menu():
     print('To see this menu again please input "menu"')
 
 
+def search_menu():
+    print('Search by what component?')
+    print('1. Package ID')
+    print('2. Address')
+    print('3. Deadline')
+    print('4. Delivery City')
+    print('5. Zip Code')
+    print('6. Weight')
+    print('7. Delivery Status')
+    print('To exit the search please input "exit"')
+    print('To see this menu again please input "menu"')
+
+
+def search_function():
+    search_menu()
+    user_input = input()
+    while user_input != 'exit':
+        if user_input == '1':
+            print("Please input Package ID")
+            package_id = input()
+            print(package_hash.search(package_id))
+
+        if user_input == '2':
+            print("Please input Address")
+            address = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if address in package_ref[1]:
+                    print(package_ref)
+
+        if user_input == '3':
+            print("Please input Deadline e.g.'10:30 AM'")
+            deadline = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if deadline in package_ref[5]:
+                    print(package_ref)
+
+        if user_input == '4':
+            print("Please input City Destination")
+            city = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if city in package_ref[2]:
+                    print(package_ref)
+
+        if user_input == '5':
+            print("Please input Zip Code")
+            zip_code = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if zip_code in package_ref[4]:
+                    print(package_ref)
+
+        if user_input == '6':
+            print("Please input Weight")
+            weight = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if weight in package_ref[6]:
+                    print(package_ref)
+
+        if user_input == '7':
+            print("Please input Status")
+            status = input()
+            for x in range(1, len(package_hash.table)):
+                package_ref = package_hash.search(str(x))
+                if status in package_ref[7]:
+                    print(package_ref)
+
+        if user_input == 'menu':
+            search_menu()
+
+        else:
+            user_input = input()
+
+    main_menu()
+
+
 # Functions that loads the trucks using the delivery lists, no specifications on time, assume that Truck Gamma is not
 # loaded until the packages are fixed and arrive at the depot.
 def load_trucks():
@@ -40,7 +119,7 @@ def load_trucks():
     for i in delivery_list_alpha:
         package_ref = package_hash.search(str(i))
         package_ref[7] = "On Truck"
-        package_hash.insert(package_ref[0],package_ref)
+        package_hash.insert(package_ref[0], package_ref)
         truck_Alpha.cargo.append(i)
 
     for i in delivery_list_beta:
@@ -96,7 +175,7 @@ def greedy_delivery(truck, clock):
         truck.set_location(shortest_location)
         truck.add_mileage(float(shortest_distance))
         truck.remove_cargo(int(shortest_id))
-        clock.add_minute(float(shortest_distance / truck.miles_per_min))
+        clock.add_minutes(float(shortest_distance / truck.miles_per_min))
         shortest_package[7] = "Delivered at " + clock.get_time()
         package_hash.insert(shortest_id, shortest_package)
         print("Package:", shortest_id, "delivered at:", clock.get_time())
@@ -113,7 +192,7 @@ class Main:
     user_input = input()
     # Process runs until exit is entered in the command line
     while user_input != 'exit':
-        
+
         # The first selection runs the simulation the trucks are loaded using the "load_trucks" function and then the
         # created trucks and their associated clocks are passed into the "greedy_delivery" function. For user visuals
         # the printing of the trucks empty cargo is included as well as the sum of the total truck mileage.
@@ -140,9 +219,7 @@ class Main:
         # run and after.
         if user_input == '2':
             print("Two Selected")
-
-            for x in range(1, len(package_hash.table)):
-                print(package_hash.search(str(x)))
+            search_function()
 
         # Package search by entering number
         if user_input == '3':
@@ -163,7 +240,7 @@ class Main:
             print("Five Selected")
             for x in range(1, len(package_hash.table)):
                 package_str = package_hash.search(str(x))
-                print(package_str[0],": ", package_str[7])
+                print(package_str[0], ": ", package_str[7])
 
         # Would be more useful if was run in real time, however you can see the difference before and after deliveries
         if user_input == '6':
