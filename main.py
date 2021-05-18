@@ -96,9 +96,9 @@ def greedy_delivery(truck, clock):
         truck.set_location(shortest_location)
         truck.add_mileage(float(shortest_distance))
         truck.remove_cargo(int(shortest_id))
-        shortest_package[7] = "Delivered"
-        package_hash.insert(shortest_id, shortest_package)
         clock.add_minute(float(shortest_distance / truck.miles_per_min))
+        shortest_package[7] = "Delivered at " + clock.get_time()
+        package_hash.insert(shortest_id, shortest_package)
         print("Package:", shortest_id, "delivered at:", clock.get_time())
 
         # The truck continues the process until the cargo is empty in which it returns to the depot

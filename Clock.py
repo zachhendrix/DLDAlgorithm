@@ -16,14 +16,15 @@ class Clock:
 
     def get_time(self):
         if self.is_morning is True:
-            return format(self.hours, '02'), ":", format(self.minutes, '02'), "AM"
+            return f"{self.hours:02d}:{self.minutes:02d} AM"
         if self.is_morning is not True:
-            return format(self.hours, '02'), ":", format(self.minutes, '02'), "PM"
+            return f"{self.hours:02d}:{self.minutes:02d} PM"
 
     def set_time(self, x, y, z):
         self.hours = x
         self.minutes = y
         self.is_morning = z
+
 
     def add_minute(self, x):
         self.minutes = self.minutes + math.ceil(x)
