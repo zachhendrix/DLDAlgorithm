@@ -43,7 +43,7 @@ def search_menu():
     print('To exit the search please input "exit"')
     print('To see this menu again please input "menu"')
 
-
+# Requirement F: Requirement was ill worded so I made sure that it could search by any factor just in case
 def search_function():
     search_menu()
     user_input = input()
@@ -110,7 +110,7 @@ def search_function():
 
     main_menu()
 
-
+# Function that resets information so that the deliveries may be checked at a certain time
 def reset_sim():
     import_packages()
 

@@ -8,6 +8,7 @@ class HashTable:
         for x in range(initial_capacity):
             self.table.append([])
 
+    # Requirement E: Objects inserted using package id as the key
     # Inserts a new item into the hash table.
     def insert(self, key, package):
         # get the bucket list where this item will go.
