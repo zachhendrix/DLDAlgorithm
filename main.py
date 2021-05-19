@@ -7,6 +7,7 @@ from Truck import Truck
 from Clock import Clock
 
 # The truck objects are created and the lists are manually specified to fit rules and specifications
+# Time Complexity O(1)
 truck_Alpha = Truck(0, .3, '4001 South 700 East', [])
 truck_Beta = Truck(0, .3, '4001 South 700 East', [])
 truck_Gamma = Truck(0, .3, '4001 South 700 East', [])
@@ -19,6 +20,7 @@ delivery_list_gamma = [2, 4, 5, 7, 8, 9, 10, 11, 12, 17, 22, 23, 24, 26, 27, 35]
 
 
 # Function that displays the Main Menu and the options listed
+# Time Complexity O(1)
 def main_menu():
     print('Welcome to the Daily Local Delivery List for WGU')
     print('Please input a command and press the "Enter" key:')
@@ -31,6 +33,8 @@ def main_menu():
     print('To see this menu again please input "menu"')
 
 
+# Function that displays the Search Menu and the options listed
+# Time Complexity O(1)
 def search_menu():
     print('Search by what component?')
     print('1. Package ID')
@@ -43,7 +47,9 @@ def search_menu():
     print('To exit the search please input "exit"')
     print('To see this menu again please input "menu"')
 
+
 # Requirement F: Requirement was ill worded so I made sure that it could search by any factor just in case
+# Time Complexity O(N)
 def search_function():
     search_menu()
     user_input = input()
@@ -110,7 +116,9 @@ def search_function():
 
     main_menu()
 
+
 # Function that resets information so that the deliveries may be checked at a certain time
+# Time Complexity O(1)
 def reset_sim():
     import_packages()
 
@@ -138,6 +146,7 @@ def reset_sim():
 def load_trucks():
     # Truck loading process, included is some code that changes the delivery status of the packages to "On Truck"
     # while the user will never really see that in this iteration of the program, I included it for scalability.
+    # Time Complexity O(N)
     for i in delivery_list_alpha:
         package_ref = package_hash.search(str(i))
         package_ref[7] = "On Truck"
@@ -153,6 +162,7 @@ def load_trucks():
 
 # Function that takes the current location of the truck and the destination in which the package is going and uses
 # the 'distance_table' and the indexes of the 'address_table' in a 2D Array search to return the distance information.
+# Time Complexity O(1)
 def distance_between(current, new):
     current_index = address_table.index(current)
     new_index = address_table.index(new)
@@ -162,6 +172,7 @@ def distance_between(current, new):
 
 # Requirement A: Greedy Algorithm
 # Function that uses a greedy algorithm to determine the quickest route to deliver the packages loaded.
+# Time Complexity O(N)
 def greedy_delivery(truck, clock, end_time):
     delivery_end = False
     while not delivery_end:
@@ -218,6 +229,7 @@ class Main:
         # The first selection runs the simulation the trucks are loaded using the "load_trucks" function and then the
         # created trucks and their associated clocks are passed into the "greedy_delivery" function. For user visuals
         # the printing of the trucks empty cargo is included as well as the sum of the total truck mileage.
+        # Time Complexity O(N)
         if user_input == '1':
             print("One Selected")
             load_trucks()
@@ -246,12 +258,14 @@ class Main:
                   float(truck_Gamma.mileage))
 
         # Function that displays all deliveries, useful for seeing the difference in before the "greedy_algorithm" was
-        # run and after.
+        #
+        # Time Complexity O(N)
         if user_input == '2':
             print("Two Selected")
             search_function()
 
         # Package search by entering number
+        # Time Complexity O(N)
         if user_input == '3':
             print("Three Selected")
             print("Please Enter Package ID to Search")
@@ -259,6 +273,7 @@ class Main:
             print(package_hash.search(package_id))
 
         # Package deletion by entering number
+        # Time Complexity O(N)
         if user_input == '4':
             print("Four Selected")
             print("Please Enter Package ID to Delete")
@@ -266,6 +281,7 @@ class Main:
             package_hash.remove(package_id)
 
         # Essentially the same as two, would be more useful if the simulation was in real time.
+        # Time Complexity O(N)
         if user_input == '5':
             print("Five Selected")
             print("Please Enter a Time in 'HH:MM AM/PM' Format (i.e 10:30 AM)")
@@ -300,7 +316,7 @@ class Main:
 
             reset_sim()
 
-
+        # Time Complexity O(1)
         if user_input == '6':
             print("Six Selected")
             print("Truck Alpha Location:", truck_Alpha.get_location())

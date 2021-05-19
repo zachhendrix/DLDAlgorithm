@@ -3,7 +3,7 @@
 # reduced artificially; Instead my delivery times are artificially higher and still delivered on time.
 import math
 
-
+# Time Complexity O(1) for class
 class Clock:
     minutes = 8
     hours = 00

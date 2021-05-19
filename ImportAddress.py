@@ -4,6 +4,7 @@ import csv
 
 address_table = []
 
+# Time Complexity O(N)
 with open('WGUPSAddressTable.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
 

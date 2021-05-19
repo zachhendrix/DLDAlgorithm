@@ -4,6 +4,7 @@ import csv
 
 distance_table = []
 
+# Time Complexity O(N)
 with open('WGUPSDistanceTable.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
 

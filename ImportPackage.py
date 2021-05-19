@@ -5,10 +5,12 @@ import HashTable
 
 package_hash = HashTable.HashTable()
 
-
+# Time Complexity O(N)
 def import_packages():
     for x in range(1, len(package_hash.table)):
         package_hash.remove(x)
+
+    # Time Complexity O(N)
     with open('WGUPSPackageFile.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
 
