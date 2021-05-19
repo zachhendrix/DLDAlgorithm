@@ -44,3 +44,4 @@ class Clock:
             self.is_morning = False
         if self.hours > 12:
             self.hours = 1
+

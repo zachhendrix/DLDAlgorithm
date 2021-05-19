@@ -1,7 +1,7 @@
 # Requirement C.1: Zach Hendrix Student ID:001220147
 import math
 from ImportDistance import distance_table
-from ImportPackage import package_hash
+from ImportPackage import *
 from ImportAddress import address_table
 from Truck import Truck
 from Clock import Clock
@@ -26,8 +26,7 @@ def main_menu():
     print('2. Display Deliveries')
     print('3. Lookup Specific Deliveries')
     print('4. Remove Specific Deliveries')
-    print('5. Lookup Delivery Status')
-    print('6. Lookup Truck Status')
+    print('5. Lookup Delivery Status at Time')
     print('To exit the program please input "exit"')
     print('To see this menu again please input "menu"')
 
@@ -104,11 +103,34 @@ def search_function():
 
         if user_input == 'menu':
             search_menu()
+            user_input = input()
 
         else:
             user_input = input()
 
     main_menu()
+
+
+def reset_sim():
+    import_packages()
+
+    # Reset truck variables
+    truck_Alpha.set_mileage(0)
+    truck_Alpha.set_location('4001 South 700 East')
+    truck_Alpha.set_cargo([])
+
+    truck_Beta.set_mileage(0)
+    truck_Beta.set_location('4001 South 700 East')
+    truck_Beta.set_cargo([])
+
+    truck_Gamma.set_mileage(0)
+    truck_Gamma.set_location('4001 South 700 East')
+    truck_Gamma.set_cargo([])
+
+    # Reset Clock variables
+    clock_Alpha.set_time(9, 5, True)
+    clock_Alpha.set_time(8, 0, True)
+    clock_Alpha.set_time(8, 0, True)
 
 
 # Functions that loads the trucks using the delivery lists, no specifications on time, assume that Truck Gamma is not
@@ -128,12 +150,6 @@ def load_trucks():
         package_hash.insert(package_ref[0], package_ref)
         truck_Beta.cargo.append(i)
 
-    for i in delivery_list_gamma:
-        package_ref = package_hash.search(str(i))
-        package_ref[7] = "On Truck"
-        package_hash.insert(package_ref[0], package_ref)
-        truck_Gamma.cargo.append(i)
-
 
 # Function that takes the current location of the truck and the destination in which the package is going and uses
 # the 'distance_table' and the indexes of the 'address_table' in a 2D Array search to return the distance information.
@@ -146,7 +162,7 @@ def distance_between(current, new):
 
 # Requirement A: Greedy Algorithm
 # Function that uses a greedy algorithm to determine the quickest route to deliver the packages loaded.
-def greedy_delivery(truck, clock):
+def greedy_delivery(truck, clock, end_time):
     delivery_end = False
     while not delivery_end:
         # I suppose the shortest_distance could cause errors if over 100, but at that point use UPS or something
@@ -180,6 +196,10 @@ def greedy_delivery(truck, clock):
         package_hash.insert(shortest_id, shortest_package)
         print("Package:", shortest_id, "delivered at:", clock.get_time())
 
+        # Implemented as an afterthought for requirement G
+        if clock.get_time() >= end_time:
+            delivery_end = True
+
         # The truck continues the process until the cargo is empty in which it returns to the depot
         if not truck.cargo:
             truck.add_mileage(math.ceil(float(distance_between(truck.location, '4001 South 700 East'))))
@@ -188,8 +208,10 @@ def greedy_delivery(truck, clock):
 
 
 class Main:
+    import_packages()
     main_menu()
     user_input = input()
+
     # Process runs until exit is entered in the command line
     while user_input != 'exit':
 
@@ -199,13 +221,21 @@ class Main:
         if user_input == '1':
             print("One Selected")
             load_trucks()
-            greedy_delivery(truck_Alpha, clock_Alpha)
-            greedy_delivery(truck_Beta, clock_Beta)
+            greedy_delivery(truck_Alpha, clock_Alpha, '5:00 PM')
+            greedy_delivery(truck_Beta, clock_Beta, '5:00 PM')
 
             # Poor truck driver has to go back out, hire more drivers WGU!
             if not truck_Alpha.cargo or not truck_Beta.cargo:
                 clock_Gamma = clock_Alpha
-                greedy_delivery(truck_Gamma, clock_Gamma)
+
+                # Moved from the "load_trucks" function for accuracy sake
+                for i in delivery_list_gamma:
+                    package_ref = package_hash.search(str(i))
+                    package_ref[7] = "On Truck"
+                    package_hash.insert(package_ref[0], package_ref)
+                    truck_Gamma.cargo.append(i)
+
+                greedy_delivery(truck_Gamma, clock_Gamma, '5:00 PM')
 
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
@@ -238,11 +268,39 @@ class Main:
         # Essentially the same as two, would be more useful if the simulation was in real time.
         if user_input == '5':
             print("Five Selected")
-            for x in range(1, len(package_hash.table)):
-                package_str = package_hash.search(str(x))
-                print(package_str[0], ": ", package_str[7])
+            print("Please Enter a Time in 'HH:MM AM/PM' Format (i.e 10:30 AM)")
 
-        # Would be more useful if was run in real time, however you can see the difference before and after deliveries
+            time_string = input()
+
+            load_trucks()
+            greedy_delivery(truck_Alpha, clock_Alpha, time_string)
+            greedy_delivery(truck_Beta, clock_Beta, time_string)
+
+            if not truck_Alpha.cargo or not truck_Beta.cargo:
+                clock_Gamma = clock_Alpha
+
+                for i in delivery_list_gamma:
+                    package_ref = package_hash.search(str(i))
+                    package_ref[7] = "On Truck"
+                    package_hash.insert(package_ref[0], package_ref)
+                    truck_Gamma.cargo.append(i)
+
+                greedy_delivery(truck_Gamma, clock_Gamma, time_string)
+
+            print("Truck Alpha Package IDs:", truck_Alpha.cargo)
+            print("Truck Beta Package IDs:", truck_Beta.cargo)
+            print("Truck Gamma Package IDs:", truck_Gamma.cargo)
+            print("Total truck mileage",
+                  float(truck_Alpha.mileage) +
+                  float(truck_Beta.mileage) +
+                  float(truck_Gamma.mileage))
+
+            for x in range(1, len(package_hash.table)):
+                print(package_hash.search(str(x)))
+
+            reset_sim()
+
+
         if user_input == '6':
             print("Six Selected")
             print("Truck Alpha Location:", truck_Alpha.get_location())

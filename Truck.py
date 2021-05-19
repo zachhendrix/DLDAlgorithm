@@ -17,6 +17,9 @@ class Truck:
     def get_mileage(self):
         return self.mileage
 
+    def set_mileage(self, x):
+        self.mileage = 0
+
     def add_mileage(self, x):
         self.mileage = self.mileage + x
 
@@ -31,6 +34,9 @@ class Truck:
 
     def get_cargo(self):
         return self.cargo
+
+    def set_cargo(self,x):
+        self.cargo = x
 
     def remove_cargo(self, x):
         self.cargo.remove(x)
