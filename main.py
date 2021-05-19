@@ -25,10 +25,10 @@ def main_menu():
     print('Welcome to the Daily Local Delivery List for WGU')
     print('Please input a command and press the "Enter" key:')
     print('1. Run Simulation')
-    print('2. Display Deliveries')
-    print('3. Lookup Specific Deliveries')
-    print('4. Remove Specific Deliveries')
-    print('5. Lookup Delivery Status at Time')
+    print('2. Search Deliveries by Content')
+    print('3. Remove Specific Deliveries')
+    print('4. Lookup Delivery Status at Time')
+    print('5. Check Truck Status')
     print('To exit the program please input "exit"')
     print('To see this menu again please input "menu"')
 
@@ -264,26 +264,19 @@ class Main:
             print("Two Selected")
             search_function()
 
-        # Package search by entering number
+        # Package deletion by entering number
         # Time Complexity O(N)
         if user_input == '3':
             print("Three Selected")
-            print("Please Enter Package ID to Search")
-            package_id = input()
-            print(package_hash.search(package_id))
-
-        # Package deletion by entering number
-        # Time Complexity O(N)
-        if user_input == '4':
-            print("Four Selected")
             print("Please Enter Package ID to Delete")
             package_id = input()
             package_hash.remove(package_id)
 
-        # Essentially the same as two, would be more useful if the simulation was in real time.
+        # Takes a string in time format and uses the string as a stopping point for the deliveries.
+        # Could be refined, but the string NEEDS to be in HH:MM AM/PM format or else it wont work.
         # Time Complexity O(N)
-        if user_input == '5':
-            print("Five Selected")
+        if user_input == '4':
+            print("Four Selected")
             print("Please Enter a Time in 'HH:MM AM/PM' Format (i.e 10:30 AM)")
 
             time_string = input()
@@ -314,11 +307,18 @@ class Main:
             for x in range(1, len(package_hash.table)):
                 print(package_hash.search(str(x)))
 
+            print("Truck Alpha Location:", truck_Alpha.get_location())
+            print("Truck Alpha Mileage:", truck_Alpha.get_mileage())
+            print("Truck Beta Location:", truck_Beta.get_location())
+            print("Truck Beta Mileage:", truck_Beta.get_mileage())
+            print("Truck Gamma Location:", truck_Gamma.get_location())
+            print("Truck Gamma Mileage:", truck_Gamma.get_mileage())
+
             reset_sim()
 
         # Time Complexity O(1)
-        if user_input == '6':
-            print("Six Selected")
+        if user_input == '5':
+            print("Five Selected")
             print("Truck Alpha Location:", truck_Alpha.get_location())
             print("Truck Alpha Mileage:", truck_Alpha.get_mileage())
             print("Truck Beta Location:", truck_Beta.get_location())
