@@ -45,3 +45,5 @@ class Clock:
         if self.hours > 12:
             self.hours = 1
 
+    def get_meridian(self):
+        return self.is_morning

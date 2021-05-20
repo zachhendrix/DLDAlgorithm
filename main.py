@@ -207,8 +207,12 @@ def greedy_delivery(truck, clock, end_time):
         package_hash.insert(shortest_id, shortest_package)
         print("Package:", shortest_id, "delivered at:", clock.get_time())
 
-        # Implemented as an afterthought for requirement G
-        if clock.get_time() >= end_time:
+        # Implemented as an afterthought for requirement G this is really bad design I know.
+        if clock.get_time() >= end_time and 'AM' in clock.get_time() and 'AM' in end_time:
+            delivery_end = True
+        if clock.get_time() >= end_time and '12' not in clock.get_time() and 'PM' in clock.get_time() and 'PM' in end_time:
+            delivery_end = True
+        if clock.get_time() <= end_time and '12' in clock.get_time() and 'PM' in clock.get_time() and 'PM' in end_time:
             delivery_end = True
 
         # The truck continues the process until the cargo is empty in which it returns to the depot
@@ -249,6 +253,9 @@ class Main:
 
                 greedy_delivery(truck_Gamma, clock_Gamma, '5:00 PM')
 
+            for x in range(1, len(package_hash.table)):
+                print(package_hash.search(str(x)))
+
             print("Truck Alpha Package IDs:", truck_Alpha.cargo)
             print("Truck Beta Package IDs:", truck_Beta.cargo)
             print("Truck Gamma Package IDs:", truck_Gamma.cargo)
@@ -280,6 +287,7 @@ class Main:
             print("Please Enter a Time in 'HH:MM AM/PM' Format (i.e 10:30 AM)")
 
             time_string = input()
+            print(time_string)
 
             load_trucks()
             greedy_delivery(truck_Alpha, clock_Alpha, time_string)
